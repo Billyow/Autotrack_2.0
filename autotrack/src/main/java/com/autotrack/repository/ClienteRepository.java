@@ -10,10 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
+public interface ClienteRepository extends CrudRepository<Cliente, Long> {
 
-    @Transactional
-    @Modifying
-    @Query("UPDATE Cliente c SET c.activo = false WHERE c.idCliente = :idCliente")
-    void borrarLogicamente(@Param("idCliente") Integer idCliente);
+    @Query("SELECT c FROM Cliente c WHERE c.documento = :documento")
+    Cliente findClienteByDocumento(@Param("documento") String documento);
 }
